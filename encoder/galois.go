@@ -13,7 +13,7 @@ func (g *GaloiField) generateTables(prime_poly int) {
 	x := 1
 	for i := 0; i < 255; i++ {
 		g.expTable[i] = x
-		g.logTable[i] = i
+		g.logTable[x] = i
 		x <<= 1
 		if x&0x100 != 0 {
 			x ^= prime_poly
@@ -59,8 +59,8 @@ func (g *GaloiField) PolyMultiply(p1, p2 []int) []int {
 	return res
 }
 
-func NewGaloiField() (g *GaloiField) {
-	g = &GaloiField{expTable: [512]int{}, logTable: [256]int{}}
+func NewGaloiField() *GaloiField {
+	g := &GaloiField{}
 	g.generateTables(0x11D)
-	return
+	return g
 }
