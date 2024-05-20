@@ -24,22 +24,22 @@ func (g *GaloiField) generateTables(prime_poly int) {
 	}
 }
 
-func (g *GaloiField) Add(x, y int) int {
+func (g *GaloiField) add(x, y int) int {
 	return x ^ y
 }
 
-func (g *GaloiField) Subtract(x, y int) int {
+func (g *GaloiField) subtract(x, y int) int {
 	return x ^ y
 }
 
-func (g *GaloiField) Multiply(x, y int) int {
+func (g *GaloiField) multiply(x, y int) int {
 	if x == 0 || y == 0 {
 		return 0
 	}
 	return g.expTable[(g.logTable[x]+g.logTable[y])%255]
 }
 
-func (g *GaloiField) Divide(x, y int) int {
+func (g *GaloiField) divide(x, y int) int {
 	if y == 0 {
 		log.Fatal("Division by 0\n")
 	}
@@ -49,17 +49,17 @@ func (g *GaloiField) Divide(x, y int) int {
 	return g.expTable[(g.logTable[x]-g.logTable[y]+255)%255]
 }
 
-func (g *GaloiField) PolyMultiply(p1, p2 []int) []int {
+func (g *GaloiField) polyMultiply(p1, p2 []int) []int {
 	res := make([]int, len(p1)+len(p2)-1)
 	for i := 0; i < len(p1); i++ {
 		for j := 0; j < len(p2); j++ {
-			res[i+j] ^= g.Multiply(p1[i], p2[j])
+			res[i+j] ^= g.multiply(p1[i], p2[j])
 		}
 	}
 	return res
 }
 
-func NewGaloiField() *GaloiField {
+func newGaloiField() *GaloiField {
 	g := &GaloiField{}
 	g.generateTables(0x11D)
 	return g

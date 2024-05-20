@@ -27,7 +27,7 @@ func (e Encoder) EncodeWithErrorCorrection(data string) ([]int, error) {
 	}
 
 	// Adiciona correção de erros usando Reed-Solomon
-	encodedMsg, err := e.rs.EncodeMsg(msg)
+	encodedMsg, err := e.rs.encodeMsg(msg)
 	if err != nil {
 		return nil, err
 	}
@@ -36,5 +36,5 @@ func (e Encoder) EncodeWithErrorCorrection(data string) ([]int, error) {
 }
 
 func NewEncoder() Encoder {
-	return Encoder{NewReedSolomon(3)}
+	return Encoder{newReedSolomon(3)}
 }
